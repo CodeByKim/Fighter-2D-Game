@@ -1,5 +1,4 @@
 ﻿#include "framework.h"
-#include "TCPFighter.h"
 #include <cstdio>
 
 class Singleton
@@ -82,12 +81,12 @@ ATOM RegisterWindowClass(HINSTANCE hInstance)
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TCPFIGHTER));
+    wcex.hIcon = NULL;
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = NULL;
     wcex.lpszClassName = WINDOWCLASS_NAME;
-    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.hIconSm = NULL;
 
     return RegisterClassExW(&wcex);
 }
