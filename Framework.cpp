@@ -1,6 +1,8 @@
 #include "Framework.h"
 #include "ScreenDib.h"
+#include "Sprite.h"
 
+CSpriteDib g_SpriteDib(2, 0x00ffffff);
 ScreenDib g_Screen(640, 480, 32);
 
 bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
@@ -78,7 +80,7 @@ bool Framework::CreateCreateWindowInstance(int nCmdShow)
 
     if (hWnd == NULL)
     {
-        return FALSE;
+        return false;
     }
 
     m_hWnd = hWnd;
@@ -96,33 +98,26 @@ bool Framework::CreateCreateWindowInstance(int nCmdShow)
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
-    return TRUE;
+    return true;
 }
 
 void Framework::FrameUpdate()
 {    
+    wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
+    wchar_t mapSpriteName[] = L"Map.bmp";
+
+    g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
+    g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
+
     BYTE* bypDest = g_Screen.GetDibBuffer();
     int iDestWidth = g_Screen.GetWidth();
     int iDestHeight = g_Screen.GetHeight();
     int iDestPitch = g_Screen.GetPitch();
-    
-    BYTE byGrayColor = 0;
-    for (int iCount = 0; iCount < 480; iCount++)
-    {
-        memset(bypDest, byGrayColor, 640 * 4);
-        bypDest += iDestPitch;
-        byGrayColor++;
-    }
-    
+
+    g_SpriteDib.DrawSprite(0, 0, 0, bypDest, iDestWidth, iDestHeight, iDestPitch);
+    g_SpriteDib.DrawSprite(1, 100, 100, bypDest, iDestWidth, iDestHeight, iDestPitch);
+
     g_Screen.DrawBuffer(m_hWnd, 0, 0);
-
-    /*Sleep(1);
-    int x = rand() % 800;
-    int y = rand() % 600;
-
-    POINT pos = { x, y };
-    wchar_t str[] = L"Hello World";
-    m_graphics->DrawString(str, wcslen(str), pos);*/
 }
 
 LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
