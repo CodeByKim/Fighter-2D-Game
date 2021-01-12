@@ -10,7 +10,14 @@ ScreenDib g_Screen(640, 480, 32);
 bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
 {
     m_hInstance = hInstance;
+
     timeBeginPeriod(1);
+    wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
+    wchar_t mapSpriteName[] = L"Map.bmp";
+
+    g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
+    g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
+
 
     RegisterWindowClass();
     
@@ -108,17 +115,12 @@ int startTime = timeGetTime();
 int endTime = timeGetTime();
 
 int sleepTime = 0;
+int number = 0;
 
 void Framework::FrameUpdate()
 {        
     startTime = timeGetTime();
     
-    wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
-    wchar_t mapSpriteName[] = L"Map.bmp";
-
-    g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
-    g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
-
     BYTE* bypDest = g_Screen.GetDibBuffer();
     int iDestWidth = g_Screen.GetWidth();
     int iDestHeight = g_Screen.GetHeight();
@@ -128,16 +130,17 @@ void Framework::FrameUpdate()
     g_SpriteDib.DrawSprite(1, 100, 100, bypDest, iDestWidth, iDestHeight, iDestPitch);
 
     g_Screen.DrawBuffer(m_hWnd, 0, 0);
-            
-    int spendTime = timeGetTime() - startTime;
+    
+    //sleepTime 하드코딩.. 수정해야 함
+    int spendTime = timeGetTime() - startTime;    
     sleepTime = 20 - spendTime;
     Sleep(sleepTime);
 
     endTime = timeGetTime();
-    int fps = (1000.0f / (endTime - startTime));
-    
-    WCHAR str[64];    
-    wsprintf(str, L"Logic Frame : %d\n", fps);
+    int fps = (1000 / (endTime - startTime));
+
+    WCHAR str[32];    
+    wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...
     SetWindowText(m_hWnd, str);
     OutputDebugString(str);
 }
