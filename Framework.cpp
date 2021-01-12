@@ -1,3 +1,5 @@
+#pragma comment(lib, "winmm.lib")
+
 #include "Framework.h"
 #include "ScreenDib.h"
 #include "Sprite.h"
@@ -8,6 +10,7 @@ ScreenDib g_Screen(640, 480, 32);
 bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
 {
     m_hInstance = hInstance;
+    timeBeginPeriod(1);
 
     RegisterWindowClass();
     
@@ -101,8 +104,15 @@ bool Framework::CreateCreateWindowInstance(int nCmdShow)
     return true;
 }
 
+int startTime = timeGetTime();
+int endTime = timeGetTime();
+
+int sleepTime = 0;
+
 void Framework::FrameUpdate()
-{    
+{        
+    startTime = timeGetTime();
+    
     wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
     wchar_t mapSpriteName[] = L"Map.bmp";
 
@@ -118,6 +128,18 @@ void Framework::FrameUpdate()
     g_SpriteDib.DrawSprite(1, 100, 100, bypDest, iDestWidth, iDestHeight, iDestPitch);
 
     g_Screen.DrawBuffer(m_hWnd, 0, 0);
+            
+    int spendTime = timeGetTime() - startTime;
+    sleepTime = 20 - spendTime;
+    Sleep(sleepTime);
+
+    endTime = timeGetTime();
+    int fps = (1000.0f / (endTime - startTime));
+    
+    WCHAR str[64];    
+    wsprintf(str, L"Logic Frame : %d\n", fps);
+    SetWindowText(m_hWnd, str);
+    OutputDebugString(str);
 }
 
 LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -126,7 +148,7 @@ LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     HDC hdc;
 
     switch (message)
-    {
+    {        
     case WM_PAINT:
     {
         hdc = BeginPaint(hWnd, &ps);
