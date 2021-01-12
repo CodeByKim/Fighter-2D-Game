@@ -141,11 +141,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="Library.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework.cpp" />
-    <ClCompile Include="TCPFighter.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
