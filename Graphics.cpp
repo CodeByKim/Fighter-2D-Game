@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-VOID Graphics::DrawString(WCHAR* str, DWORD strLength, POINT position)
+VOID Graphics::DrawString(wchar_t* str, int strLength, POINT position)
 {
 	TextOut(m_hDC, position.x, position.y, str, strLength);
 }

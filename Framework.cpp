@@ -1,6 +1,9 @@
 #include "Framework.h"
+#include "ScreenDib.h"
 
-BOOL Framework::Create(HINSTANCE hInstance, int nCmdShow)
+ScreenDib g_Screen(640, 480, 32);
+
+bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
 {
     m_hInstance = hInstance;
 
@@ -17,10 +20,10 @@ BOOL Framework::Create(HINSTANCE hInstance, int nCmdShow)
     }
 }
 
-VOID Framework::Run()
+void Framework::Run()
 {
     MSG msg;
-    while (TRUE)
+    while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
@@ -37,7 +40,7 @@ VOID Framework::Run()
     }
 }
 
-VOID Framework::Release()
+void Framework::Release()
 {
     delete m_graphics;
 }
@@ -48,7 +51,7 @@ Framework& Framework::GetInstance()
 	return instance;
 }
 
-VOID Framework::RegisterWindowClass()
+void Framework::RegisterWindowClass()
 {
     WNDCLASSEXW wcex;
 
@@ -68,7 +71,7 @@ VOID Framework::RegisterWindowClass()
     RegisterClassExW(&wcex);
 }
 
-BOOL Framework::CreateCreateWindowInstance(int nCmdShow)
+bool Framework::CreateCreateWindowInstance(int nCmdShow)
 {           
     HWND hWnd = CreateWindowW(WINDOWCLASS_NAME, WINDOWCLASS_NAME, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, m_hInstance, nullptr);
@@ -80,7 +83,7 @@ BOOL Framework::CreateCreateWindowInstance(int nCmdShow)
 
     m_hWnd = hWnd;
 
-    RECT rectWindow = { 0, 0, 800, 600 };
+    RECT rectWindow = { 0, 0, 640, 480 };
     AdjustWindowRect(&rectWindow, WS_OVERLAPPEDWINDOW, FALSE);
     SetWindowPos(hWnd, 
                 HWND_TOPMOST, 
@@ -96,16 +99,30 @@ BOOL Framework::CreateCreateWindowInstance(int nCmdShow)
     return TRUE;
 }
 
-VOID Framework::FrameUpdate()
-{
-    Sleep(500);
+void Framework::FrameUpdate()
+{    
+    BYTE* bypDest = g_Screen.GetDibBuffer();
+    int iDestWidth = g_Screen.GetWidth();
+    int iDestHeight = g_Screen.GetHeight();
+    int iDestPitch = g_Screen.GetPitch();
+    
+    BYTE byGrayColor = 0;
+    for (int iCount = 0; iCount < 480; iCount++)
+    {
+        memset(bypDest, byGrayColor, 640 * 4);
+        bypDest += iDestPitch;
+        byGrayColor++;
+    }
+    
+    g_Screen.DrawBuffer(m_hWnd, 0, 0);
 
+    /*Sleep(1);
     int x = rand() % 800;
     int y = rand() % 600;
 
     POINT pos = { x, y };
-    WCHAR str[] = L"Hello World";
-    m_graphics->DrawString(str, 11, pos);    
+    wchar_t str[] = L"Hello World";
+    m_graphics->DrawString(str, wcslen(str), pos);*/
 }
 
 LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

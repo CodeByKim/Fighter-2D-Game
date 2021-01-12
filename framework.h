@@ -8,9 +8,9 @@
 class Framework
 {
 public:	
-	BOOL						Create(HINSTANCE hInstance, int nCmdShow);
-	VOID						Run();
-	VOID						Release();
+	bool						Create(HINSTANCE hInstance, int nCmdShow);
+	void						Run();
+	void						Release();
 	static Framework&			GetInstance();
 
 private:
@@ -18,9 +18,9 @@ private:
 	HWND						m_hWnd;
 	Graphics*					m_graphics;
 
-	VOID						RegisterWindowClass();
-	BOOL						CreateCreateWindowInstance(int nCmdShow);
-	VOID						FrameUpdate();
+	void						RegisterWindowClass();
+	bool						CreateCreateWindowInstance(int nCmdShow);
+	void						FrameUpdate();
 
 	static LRESULT CALLBACK		WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 

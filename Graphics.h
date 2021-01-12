@@ -6,7 +6,7 @@ class Graphics
 {
 public:
 	
-	VOID					DrawString(WCHAR* str, DWORD strLength, POINT position);
+	VOID					DrawString(wchar_t* str, int strLength, POINT position);
 	Graphics(HWND hWnd);
 	~Graphics();
 
