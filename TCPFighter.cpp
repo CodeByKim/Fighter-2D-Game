@@ -1,5 +1,6 @@
-﻿#include "framework.h"
-#include <cstdio>
+﻿#include <cstdio>
+
+#include "framework.h"
 
 class Singleton
 {
@@ -12,7 +13,7 @@ public:
 
     void Print(HDC dc)
     {
-        TextOut(dc, 0, 0, L"Hello World", 11);
+        TextOut(dc, 0, 0, L"Hello World", 11); 
     }
 
 private:
