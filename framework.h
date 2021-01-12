@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library.h"
+#include "Graphics.h"
 
 #define WINDOWCLASS_NAME L"TCPFighter"
 
@@ -15,6 +16,7 @@ public:
 private:
 	HINSTANCE					m_hInstance;
 	HWND						m_hWnd;
+	Graphics*					m_graphics;
 
 	VOID						RegisterWindowClass();
 	BOOL						CreateCreateWindowInstance(int nCmdShow);

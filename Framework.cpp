@@ -6,7 +6,15 @@ BOOL Framework::Create(HINSTANCE hInstance, int nCmdShow)
 
     RegisterWindowClass();
     
-    return CreateCreateWindowInstance(nCmdShow);
+    if (CreateCreateWindowInstance(nCmdShow))
+    {
+        m_graphics = new Graphics(m_hWnd);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 VOID Framework::Run()
@@ -31,7 +39,7 @@ VOID Framework::Run()
 
 VOID Framework::Release()
 {
-    //ReleaseDC(g_hWnd, g_hDc);
+    delete m_graphics;
 }
 
 Framework& Framework::GetInstance()
@@ -61,7 +69,7 @@ VOID Framework::RegisterWindowClass()
 }
 
 BOOL Framework::CreateCreateWindowInstance(int nCmdShow)
-{   
+{           
     HWND hWnd = CreateWindowW(WINDOWCLASS_NAME, WINDOWCLASS_NAME, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, m_hInstance, nullptr);
 
@@ -90,7 +98,14 @@ BOOL Framework::CreateCreateWindowInstance(int nCmdShow)
 
 VOID Framework::FrameUpdate()
 {
-    OutputDebugString(L"Update...\n");    
+    Sleep(500);
+
+    int x = rand() % 800;
+    int y = rand() % 600;
+
+    POINT pos = { x, y };
+    WCHAR str[] = L"Hello World";
+    m_graphics->DrawString(str, 11, pos);    
 }
 
 LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
