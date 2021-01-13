@@ -19,7 +19,7 @@ private:
 	Graphics*					m_graphics;
 
 	void						RegisterWindowClass();
-	bool						CreateCreateWindowInstance(int nCmdShow);
+	bool						CreateWindowInstance(int nCmdShow);
 	void						FrameUpdate();
 
 	static LRESULT CALLBACK		WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

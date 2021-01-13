@@ -18,18 +18,15 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
     g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
     g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
 
-
     RegisterWindowClass();
     
-    if (CreateCreateWindowInstance(nCmdShow))
+    if (CreateWindowInstance(nCmdShow))
     {
         m_graphics = new Graphics(m_hWnd);
         return TRUE;
     }
-    else
-    {
-        return FALSE;
-    }
+
+    return FALSE;
 }
 
 void Game::Run()
@@ -85,7 +82,7 @@ void Game::RegisterWindowClass()
     RegisterClassExW(&wcex);
 }
 
-bool Game::CreateCreateWindowInstance(int nCmdShow)
+bool Game::CreateWindowInstance(int nCmdShow)
 {           
     HWND hWnd = CreateWindowW(WINDOWCLASS_NAME, WINDOWCLASS_NAME, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, m_hInstance, nullptr);
@@ -113,7 +110,7 @@ bool Game::CreateCreateWindowInstance(int nCmdShow)
     return true;
 }
 
-std::vector<int> fpsQueue;
+std::list<int> fpsQueue;
 
 void Game::FrameUpdate()
 {        
@@ -140,14 +137,13 @@ void Game::FrameUpdate()
 
     if (fpsQueue.size() >= 30)
     {
-        int sum = 0;
-        for (int i = 0; i < fpsQueue.size(); i++)
+        int sum = 0;   
+        for (auto iter = fpsQueue.begin(); iter != fpsQueue.end(); ++iter)
         {
-            sum += fpsQueue[i];
+            sum += *iter;
         }
 
         fpsQueue.erase(fpsQueue.begin());
-
         fps = sum / 30;
     }
 

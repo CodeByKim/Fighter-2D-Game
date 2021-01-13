@@ -12,6 +12,7 @@ public:
 		int iCenterPointX; // 중점 X
 		int iCenterPointY; // 중점 Y
 	};
+
 	CSpriteDib(int iMaxSprite, DWORD dwColorKey);
 	virtual ~CSpriteDib();
 	BOOL LoadDibSprite(int iSpriteIndex, WCHAR* szFileName, int iCenterPointX, int iCenterPointY);
