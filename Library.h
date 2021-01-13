@@ -15,3 +15,9 @@
 #include <chrono>
 #include <timeapi.h>
 #include <filesystem>
+
+struct Position2D
+{
+	int x;
+	int y;
+};

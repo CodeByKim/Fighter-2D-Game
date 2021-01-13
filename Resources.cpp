@@ -1,12 +1,10 @@
 #include "Resources.h"
+#include "BmpImageData.h"
 
 bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, int iCenterPointX, int iCenterPointY)
 {
 	HANDLE hFile;
-	DWORD dwRead;
-	//int iPitch;
-	//int iImageSize;
-	//int iCount;
+	DWORD dwRead;	
 	BITMAPFILEHEADER stFileHeader;
 	BITMAPINFOHEADER stInfoHeader;
 	
@@ -38,7 +36,7 @@ bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, in
 			int pitch = (stInfoHeader.biWidth * 4) + 3 & ~3;
 			int width = stInfoHeader.biWidth;
 			int height = stInfoHeader.biHeight;
-
+						
 			bmpImage->pitch = pitch;
 			bmpImage->width = width;
 			bmpImage->height = height;

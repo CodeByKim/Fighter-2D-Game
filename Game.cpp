@@ -2,7 +2,7 @@
 
 #include "Game.h"
 #include "ScreenDib.h"
-#include "Sprite.h"
+#include "SpriteDib.h"
 
 CSpriteDib g_SpriteDib(2, 0x00ffffff);
 ScreenDib g_Screen(640, 480, 32);

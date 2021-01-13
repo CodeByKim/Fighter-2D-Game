@@ -1,28 +1,21 @@
 #pragma once
+#include "Library.h"
+#include "BmpImageData.h"
 
-class CSpriteDib
+class Sprite
 {
-public:
-	typedef struct st_SPRITE
-	{
-		BYTE* bypImage; // 스프라이트 이미지 포인터.
-		int iWidth; // Widht
-		int iHeight; // Height
-		int iPitch; // Pitch
-		int iCenterPointX; // 중점 X
-		int iCenterPointY; // 중점 Y
-	};
+public:			
+	static Sprite*			Create(const wchar_t* fileName, DWORD colorKey = 0x00ffffff);
 
-	CSpriteDib(int iMaxSprite, DWORD dwColorKey);
-	virtual ~CSpriteDib();
-	BOOL LoadDibSprite(int iSpriteIndex, WCHAR* szFileName, int iCenterPointX, int iCenterPointY);
-	void ReleaseSprite(int iSpriteIndex);
-	void DrawSprite(int iSpriteIndex, int iDrawX, int iDrawY,
-		BYTE* bypDest, int iDestWidth, int iDestHeight, int iDestPitch, int iDrawLen = 100);	
-	void DrawImage(int iSpriteIndex, int iDrawX, int iDrawY,
-		BYTE* bypDest, int iDestWidth, int iDestHeight, int iDestPitch, int iDrawLen = 100);
-protected:
-	int m_iMaxSprite;
-	st_SPRITE* m_stpSprite;
-	DWORD m_dwColorKey;
+	Position2D&				GetPivot();	
+	void					SetPivot(Position2D pivot);
+	void					SetPivot(int x, int y);
+
+private:	
+	BmpImageData			mBmpImage;
+	DWORD					mColorKey;	
+	Position2D				mPivot;	
+
+	Sprite(BmpImageData data, DWORD colorKey);
+	~Sprite();
 };
