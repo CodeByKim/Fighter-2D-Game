@@ -55,6 +55,8 @@ void Framework::Run()
 void Framework::Release()
 {
     delete m_graphics;
+
+    timeEndPeriod(1);
 }
 
 Framework& Framework::GetInstance()
@@ -111,15 +113,11 @@ bool Framework::CreateCreateWindowInstance(int nCmdShow)
     return true;
 }
 
-int startTime = timeGetTime();
-int endTime = timeGetTime();
-
-int sleepTime = 0;
-int number = 0;
+std::vector<int> fpsQueue;
 
 void Framework::FrameUpdate()
 {        
-    startTime = timeGetTime();
+    int startTime = timeGetTime();
     
     BYTE* bypDest = g_Screen.GetDibBuffer();
     int iDestWidth = g_Screen.GetWidth();
@@ -132,12 +130,26 @@ void Framework::FrameUpdate()
     g_Screen.DrawBuffer(m_hWnd, 0, 0);
     
     //sleepTime 하드코딩.. 수정해야 함
-    int spendTime = timeGetTime() - startTime;    
-    sleepTime = 20 - spendTime;
-    Sleep(sleepTime);
+    int spendTime = timeGetTime() - startTime;        
+    Sleep(20 - spendTime);
 
-    endTime = timeGetTime();
+    int endTime = timeGetTime();
     int fps = (1000 / (endTime - startTime));
+
+    fpsQueue.push_back(fps);
+
+    if (fpsQueue.size() >= 30)
+    {
+        int sum = 0;
+        for (int i = 0; i < fpsQueue.size(); i++)
+        {
+            sum += fpsQueue[i];
+        }
+
+        fpsQueue.erase(fpsQueue.begin());
+
+        fps = sum / 30;
+    }
 
     WCHAR str[32];    
     wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...
@@ -169,8 +181,8 @@ LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     return 0;
 }
 
-Framework::Framework() 
-    : m_hInstance(NULL), m_hWnd(NULL)
+Framework::Framework()
+    : m_hInstance(nullptr), m_hWnd(nullptr), m_graphics(nullptr)
 {
 }
 
