@@ -5,13 +5,13 @@
 
 #define WINDOWCLASS_NAME L"TCPFighter"
 
-class Framework
+class Game
 {
 public:	
 	bool						Create(HINSTANCE hInstance, int nCmdShow);
 	void						Run();
 	void						Release();
-	static Framework&			GetInstance();
+	static Game&				GetInstance();
 
 private:
 	HINSTANCE					m_hInstance;
@@ -24,6 +24,6 @@ private:
 
 	static LRESULT CALLBACK		WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-	Framework();
-	~Framework();
+	Game();
+	~Game();
 };

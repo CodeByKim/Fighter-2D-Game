@@ -1,13 +1,13 @@
 #pragma comment(lib, "winmm.lib")
 
-#include "Framework.h"
+#include "Game.h"
 #include "ScreenDib.h"
 #include "Sprite.h"
 
 CSpriteDib g_SpriteDib(2, 0x00ffffff);
 ScreenDib g_Screen(640, 480, 32);
 
-bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
+bool Game::Create(HINSTANCE hInstance, int nCmdShow)
 {
     m_hInstance = hInstance;
 
@@ -32,7 +32,7 @@ bool Framework::Create(HINSTANCE hInstance, int nCmdShow)
     }
 }
 
-void Framework::Run()
+void Game::Run()
 {
     MSG msg;
     while (true)
@@ -52,26 +52,26 @@ void Framework::Run()
     }
 }
 
-void Framework::Release()
+void Game::Release()
 {
     delete m_graphics;
 
     timeEndPeriod(1);
 }
 
-Framework& Framework::GetInstance()
+Game& Game::GetInstance()
 {
-	static Framework instance;
+	static Game instance;
 	return instance;
 }
 
-void Framework::RegisterWindowClass()
+void Game::RegisterWindowClass()
 {
     WNDCLASSEXW wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = Framework::WndProc;
+    wcex.lpfnWndProc = Game::WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = m_hInstance;
@@ -85,7 +85,7 @@ void Framework::RegisterWindowClass()
     RegisterClassExW(&wcex);
 }
 
-bool Framework::CreateCreateWindowInstance(int nCmdShow)
+bool Game::CreateCreateWindowInstance(int nCmdShow)
 {           
     HWND hWnd = CreateWindowW(WINDOWCLASS_NAME, WINDOWCLASS_NAME, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, m_hInstance, nullptr);
@@ -115,7 +115,7 @@ bool Framework::CreateCreateWindowInstance(int nCmdShow)
 
 std::vector<int> fpsQueue;
 
-void Framework::FrameUpdate()
+void Game::FrameUpdate()
 {        
     int startTime = timeGetTime();
     
@@ -157,7 +157,7 @@ void Framework::FrameUpdate()
     OutputDebugString(str);
 }
 
-LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PAINTSTRUCT ps;
     HDC hdc;
@@ -181,12 +181,12 @@ LRESULT CALLBACK Framework::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
     return 0;
 }
 
-Framework::Framework()
+Game::Game()
     : m_hInstance(nullptr), m_hWnd(nullptr), m_graphics(nullptr)
 {
 }
 
-Framework::~Framework()
+Game::~Game()
 {
 
 }

@@ -13,12 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{eb353d01-94b3-43ba-abe4-fc47f4182794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{f8db3491-2527-49c4-808e-343b61c83a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core\Components">
+      <UniqueIdentifier>{1ac3d15c-67c3-426a-b378-aebd9af5df86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Components">
+      <UniqueIdentifier>{dfe02945-58d0-4f5c-904f-8e5a052b134c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core\Object">
+      <UniqueIdentifier>{5518d890-b246-4c91-98d1-c4d7086ebd00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core\Object">
+      <UniqueIdentifier>{ac70c9cd-9985-492e-a81e-4e379641d154}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Graphics.h">
@@ -30,11 +45,26 @@
     <ClInclude Include="Sprite.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>헤더 파일\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>헤더 파일\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>헤더 파일\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>헤더 파일\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>헤더 파일\Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -46,6 +76,24 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>소스 파일\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>소스 파일\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>소스 파일\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>소스 파일\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\Core\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
