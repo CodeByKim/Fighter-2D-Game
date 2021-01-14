@@ -1,7 +1,16 @@
 #include "Sprite.h"
 #include "Resources.h"
+#include "Game.h"
+#include "RenderComponent.h"
 
-Sprite* Sprite::Create(const wchar_t* fileName, DWORD colorKey)
+void Sprite::OnRender(Graphics* graphics)
+{
+    wchar_t str[32];
+    wsprintf(str, L"%d\n", this->mBmpImage.width);
+    OutputDebugString(str);
+}
+
+Sprite* Sprite::Create(const wchar_t* fileName, BaseObject* owner, DWORD colorKey)
 {	
     BmpImageData data;
     if (!Resources::GetInstance().LoadBmpImage(&data, fileName, 0, 0))
@@ -10,6 +19,7 @@ Sprite* Sprite::Create(const wchar_t* fileName, DWORD colorKey)
     }
 
     Sprite* sprite = new Sprite(data, colorKey);
+    Game::GetInstance().mRenderComponent->Register(sprite);
     return sprite;
 }
 

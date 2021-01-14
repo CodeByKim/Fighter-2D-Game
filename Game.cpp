@@ -3,26 +3,39 @@
 #include "Game.h"
 #include "ScreenDib.h"
 #include "SpriteDib.h"
+#include "Sprite.h"
+#include "RenderComponent.h"
+#include "GameObject.h"
+#include "Graphics.h"
 
 CSpriteDib g_SpriteDib(2, 0x00ffffff);
 ScreenDib g_Screen(640, 480, 32);
 
 bool Game::Create(HINSTANCE hInstance, int nCmdShow)
 {
-    m_hInstance = hInstance;
+    mhInstance = hInstance;
 
     timeBeginPeriod(1);
-    wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
-    wchar_t mapSpriteName[] = L"Map.bmp";
 
-    g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
-    g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
+    //wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
+    //wchar_t mapSpriteName[] = L"Map.bmp";
+
+    //g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
+    //g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
+
+    
 
     RegisterWindowClass();
     
     if (CreateWindowInstance(nCmdShow))
     {
-        m_graphics = new Graphics(m_hWnd);
+        mGraphics = new Graphics(mhWnd);        
+
+        mRenderComponent = new RenderComponent();
+        mRenderComponent->SetGraphic(mGraphics);        
+
+        mTestPlayer = new GameObject();
+
         return TRUE;
     }
 
@@ -51,7 +64,7 @@ void Game::Run()
 
 void Game::Release()
 {
-    delete m_graphics;
+    delete mGraphics;
 
     timeEndPeriod(1);
 }
@@ -71,7 +84,7 @@ void Game::RegisterWindowClass()
     wcex.lpfnWndProc = Game::WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
-    wcex.hInstance = m_hInstance;
+    wcex.hInstance = mhInstance;
     wcex.hIcon = NULL;
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -85,14 +98,14 @@ void Game::RegisterWindowClass()
 bool Game::CreateWindowInstance(int nCmdShow)
 {           
     HWND hWnd = CreateWindowW(WINDOWCLASS_NAME, WINDOWCLASS_NAME, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, m_hInstance, nullptr);
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, mhInstance, nullptr);
 
-    if (hWnd == NULL)
+    if (hWnd == nullptr)
     {
         return false;
     }
 
-    m_hWnd = hWnd;
+    mhWnd = hWnd;
 
     RECT rectWindow = { 0, 0, 640, 480 };
     AdjustWindowRect(&rectWindow, WS_OVERLAPPEDWINDOW, FALSE);
@@ -111,21 +124,22 @@ bool Game::CreateWindowInstance(int nCmdShow)
 }
 
 std::list<int> fpsQueue;
-
 void Game::FrameUpdate()
-{        
+{            
     int startTime = timeGetTime();
     
-    BYTE* bypDest = g_Screen.GetDibBuffer();
+    /*BYTE* bypDest = g_Screen.GetDibBuffer();
     int iDestWidth = g_Screen.GetWidth();
     int iDestHeight = g_Screen.GetHeight();
     int iDestPitch = g_Screen.GetPitch();
 
     g_SpriteDib.DrawSprite(0, 0, 0, bypDest, iDestWidth, iDestHeight, iDestPitch);
     g_SpriteDib.DrawSprite(1, 100, 100, bypDest, iDestWidth, iDestHeight, iDestPitch);
-
-    g_Screen.DrawBuffer(m_hWnd, 0, 0);
     
+    g_Screen.DrawBuffer(mhWnd, 0, 0);*/
+
+    mRenderComponent->Execute();
+
     //sleepTime 하드코딩.. 수정해야 함
     int spendTime = timeGetTime() - startTime;        
     Sleep(20 - spendTime);
@@ -148,9 +162,8 @@ void Game::FrameUpdate()
     }
 
     WCHAR str[32];    
-    wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...
-    SetWindowText(m_hWnd, str);
-    OutputDebugString(str);
+    wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...    
+    SetWindowText(mhWnd, str);    
 }
 
 LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -178,7 +191,7 @@ LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 }
 
 Game::Game()
-    : m_hInstance(nullptr), m_hWnd(nullptr), m_graphics(nullptr)
+    : mhInstance(nullptr), mhWnd(nullptr), mGraphics(nullptr)
 {
 }
 

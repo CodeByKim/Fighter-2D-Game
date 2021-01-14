@@ -15,7 +15,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetPitch();
-		
+	
 private:
 	BITMAPINFO m_stDibInfo;
 	BYTE* m_bypBuffer;

@@ -1,8 +1,10 @@
 #include "Graphics.h"
 
-VOID Graphics::DrawString(wchar_t* str, int strLength, POINT position)
-{
-	TextOut(m_hDC, position.x, position.y, str, strLength);
+//dest는 모두 RenderComponent에서 얻어와야 함
+//void CSpriteDib::DrawSprite(int iSpriteIndex, int iDrawX, int iDrawY, BYTE* bypDest, int iDestWidth,
+void Graphics::DrawSprite(Position2D position)
+{	
+	
 }
 
 Graphics::Graphics(HWND hWnd)

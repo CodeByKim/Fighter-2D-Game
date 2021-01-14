@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Library.h"
-#include "Graphics.h"
-
 #define WINDOWCLASS_NAME L"TCPFighter"
+#include "Library.h"
+
+class Graphics;
+class RenderComponent;
+class GameObject;
 
 class Game
 {
@@ -12,12 +14,9 @@ public:
 	void						Run();
 	void						Release();
 	static Game&				GetInstance();
+	RenderComponent* mRenderComponent;
 
-private:
-	HINSTANCE					m_hInstance;
-	HWND						m_hWnd;
-	Graphics*					m_graphics;
-
+private:	
 	void						RegisterWindowClass();
 	bool						CreateWindowInstance(int nCmdShow);
 	void						FrameUpdate();
@@ -26,4 +25,10 @@ private:
 
 	Game();
 	~Game();
+
+	HINSTANCE					mhInstance;
+	HWND						mhWnd;
+	Graphics*					mGraphics;
+	
+	GameObject*					mTestPlayer;
 };

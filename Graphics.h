@@ -4,14 +4,13 @@
 
 class Graphics
 {
-public:
-	
-	VOID					DrawString(wchar_t* str, int strLength, POINT position);
+public:	
+	void DrawSprite(Position2D position);
+
 	Graphics(HWND hWnd);
 	~Graphics();
+	HDC							m_hDC;
 
 private:
-	HWND	m_hWnd;
-	HDC		m_hDC;
+	HWND						m_hWnd;	
 };
-

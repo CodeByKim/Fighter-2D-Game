@@ -2,6 +2,8 @@
 #include "Resources.h"
 #include "Sprite.h"
 
+#include "GameObject.h"
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -9,7 +11,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-    
+        
     //Sprite* sprite = Sprite::Create(L"Test.bmp");
     //sprite->SetPivot(71, 90);    
     

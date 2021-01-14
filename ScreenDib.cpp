@@ -18,6 +18,7 @@ ScreenDib::~ScreenDib()
 {
 	ReleaseDibBuffer();
 }
+
 VOID ScreenDib::CreateDibBuffer(int width, int height, int colorBit)
 {
 	m_iWidth = width;
@@ -58,25 +59,30 @@ VOID ScreenDib::ReleaseDibBuffer()
 		delete[] m_bypBuffer;
 	m_bypBuffer = NULL;
 }
+
 void ScreenDib::DrawBuffer(HWND hWnd, int x, int y)
 {
-	if (m_bypBuffer == NULL) return;
-	RECT Rect;
-	HDC hDC;
+	if (m_bypBuffer == NULL) 
+		return;	
+	
 	//------------------------------------------------------------------
 	// 찍을 대상의 DC 를 얻는다.
 	//------------------------------------------------------------------
-	GetWindowRect(hWnd, &Rect);
-	hDC = GetDC(hWnd);
+	
 	//------------------------------------------------------------------
 	// GDI 함수를 사용하여 DC에 출력한다.
-	//------------------------------------------------------------------
+	//------------------------------------------------------------------	
+
+	HDC hDC = GetDC(hWnd);
+
 	int i = SetDIBitsToDevice(hDC, 0, 0, m_iWidth, m_iHeight,
 		0, 0, 0, m_iHeight,
 		m_bypBuffer, &m_stDibInfo,
 		DIB_RGB_COLORS);
+	
 	ReleaseDC(hWnd, hDC);
 }
+
 BYTE* ScreenDib::GetDibBuffer(void)
 {
 	return m_bypBuffer;
