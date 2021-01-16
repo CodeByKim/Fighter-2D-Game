@@ -2,15 +2,15 @@
 
 #include "Library.h"
 #include "BaseObject.h"
-#include "IRenderable.h"
 
 class Sprite;
 
 class GameObject : public BaseObject
 {
 public:
-	GameObject();
-	void				Update() override;	
+	GameObject(const wchar_t* spriteName);
+	void				OnUpdate() override;
+	void				OnRender(Graphics* graphics) override;
 
 protected:
 	Sprite*				mSprite;

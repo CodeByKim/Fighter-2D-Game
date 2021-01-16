@@ -3,17 +3,14 @@
 #include "Graphics.h"
 #include "IRenderable.h"
 
-RenderComponent::RenderComponent(int width, int height, int colorBit)
-	: mDC(nullptr), 	
-	mPitch(0), 
-	mColorBit(colorBit), 
-	mMemoryBuffer(nullptr), 
-	mBufferSize(0)
+RenderComponent::RenderComponent(HWND hWnd, int width, int height, int colorBit)	
 {
-	memset(&mDibInfo, 0, sizeof(BITMAPINFO));
-	mScreenSize = { width, height };
-	
+	mhWnd = hWnd;
+	memset(&mDibInfo, 0, sizeof(BITMAPINFO));		
 	CreateDibBuffer(width, height, colorBit);
+	mDC = GetDC(hWnd);
+
+	mGraphics = new Graphics(mhWnd, screenBuffer);
 }
 
 RenderComponent::~RenderComponent()
@@ -21,26 +18,30 @@ RenderComponent::~RenderComponent()
 	ReleaseDibBuffer();
 }
 
-void RenderComponent::Execute()
+void RenderComponent::Execute(std::vector<GameObject*>& gameObjects)
 {	
-	mRenderObject->OnRender(mGraphics);
-
-	if (mMemoryBuffer == nullptr)
+	if (screenBuffer.memoryBuffer == nullptr)
 		return;
-	
-	int i = SetDIBitsToDevice(mDC, 0, 0, mScreenSize.width, mScreenSize.height,
-		0, 0, 0, mScreenSize.height,
-		mMemoryBuffer, &mDibInfo,
+
+	for (int i = 0; i < gameObjects.size(); i++)
+	{
+		gameObjects[i]->OnRender(mGraphics);
+	}
+
+	SetDIBitsToDevice(mDC, 0, 0, screenBuffer.screenSize.width, screenBuffer.screenSize.height,
+		0, 0, 0, screenBuffer.screenSize.height,
+		screenBuffer.memoryBuffer, &mDibInfo,
 		DIB_RGB_COLORS);
 }
 
 void RenderComponent::CreateDibBuffer(int width, int height, int colorBit)
-{
-	mScreenSize.width = width;
-	mScreenSize.height = height;
-	mColorBit = colorBit;
-	mPitch = ((width * (colorBit / 8)) + 3) & ~3;
-	mBufferSize = mPitch * height;
+{	
+	screenBuffer.screenSize.width = width;
+	screenBuffer.screenSize.height = height;
+
+	screenBuffer.colorBit = colorBit;
+	screenBuffer.pitch = ((width * (colorBit / 8)) + 3) & ~3;
+	screenBuffer.bufferSize = screenBuffer.pitch * height;
 
 	//------------------------------------------------------------------
 	// DibInfo 庆歹 积己
@@ -52,7 +53,7 @@ void RenderComponent::CreateDibBuffer(int width, int height, int colorBit)
 	mDibInfo.bmiHeader.biPlanes = 1;
 	mDibInfo.bmiHeader.biBitCount = colorBit;
 	mDibInfo.bmiHeader.biCompression = 0;
-	mDibInfo.bmiHeader.biSizeImage = mBufferSize;
+	mDibInfo.bmiHeader.biSizeImage = screenBuffer.bufferSize;
 	mDibInfo.bmiHeader.biXPelsPerMeter = 0;
 	mDibInfo.bmiHeader.biYPelsPerMeter = 0;
 	mDibInfo.bmiHeader.biClrUsed = 0;
@@ -61,19 +62,17 @@ void RenderComponent::CreateDibBuffer(int width, int height, int colorBit)
 	//------------------------------------------------------------------
 	// 滚欺 积己
 	//------------------------------------------------------------------
-	mMemoryBuffer = new BYTE[mBufferSize];
-	memset(mMemoryBuffer, 0xff, mBufferSize);
+	screenBuffer.memoryBuffer = new BYTE[screenBuffer.bufferSize];
+	memset(screenBuffer.memoryBuffer, 0xff, screenBuffer.bufferSize);
 }
 
 void RenderComponent::ReleaseDibBuffer()
-{
-	memset(&mScreenSize, 0, sizeof(ScreenSize));
-	mPitch = 0;
-	mBufferSize = 0;
+{	
 	memset(&mDibInfo, 0x00, sizeof(BITMAPINFO));
 
-	if (mMemoryBuffer != nullptr)
-		delete[] mMemoryBuffer;
+	if (screenBuffer.memoryBuffer != nullptr)
+		delete[] screenBuffer.memoryBuffer;
 
-	mMemoryBuffer = nullptr;
+	screenBuffer.memoryBuffer = nullptr;
+	ReleaseDC(mhWnd, mDC);
 }

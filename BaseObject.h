@@ -2,10 +2,13 @@
 
 #include "Library.h"
 
+class Graphics;
+
 class BaseObject
 {
 public:
-	virtual void			Update() = 0;
+	virtual void			OnUpdate() = 0;
+	virtual void			OnRender(Graphics* graphics) = 0;
 
 protected:
 	std::wstring			mName;

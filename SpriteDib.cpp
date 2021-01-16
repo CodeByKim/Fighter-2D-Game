@@ -14,12 +14,11 @@ CSpriteDib::CSpriteDib(int iMaxSprite, DWORD dwColorKey)
 }
 
 CSpriteDib::~CSpriteDib()
-{
-	int iCount;
+{	
 	//-----------------------------------------------------------------
 	// 전체를 돌면서 모두 지우자.
 	//-----------------------------------------------------------------
-	for (iCount = 0; iCount > m_iMaxSprite; iCount++)
+	for (int iCount = 0; iCount > m_iMaxSprite; iCount++)
 	{
 		ReleaseSprite(iCount);
 	}

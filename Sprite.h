@@ -4,24 +4,25 @@
 #include "IRenderable.h"
 
 class Graphics;
-class BaseObject;
+class GameObject;
 
-class Sprite : public IRenderable
+class Sprite
 {
 public:			
-	static Sprite*			Create(const wchar_t* fileName, BaseObject* owner, DWORD colorKey = 0x00ffffff);
+	static Sprite*			Create(const wchar_t* fileName, GameObject* owner, DWORD colorKey = 0x00ffffff);
 
 	Position2D&				GetPivot();	
 	void					SetPivot(Position2D pivot);
 	void					SetPivot(int x, int y);
-
-	void					OnRender(Graphics* graphic) override;
+	BmpImageData			GetBmpImageData();
+	DWORD					GetColorKey();
 
 private:	
 	BmpImageData			mBmpImage;
 	DWORD					mColorKey;	
 	Position2D				mPivot;	
-	BaseObject*				mOwner;
-	Sprite(BmpImageData data, DWORD colorKey);
+	GameObject*				mOwner;
+
+	Sprite(BmpImageData data, GameObject* owner, DWORD colorKey);
 	~Sprite();
 };

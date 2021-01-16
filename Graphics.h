@@ -1,16 +1,19 @@
 #pragma once
 
 #include "Library.h"
+#include "Screen.h"
+
+class Sprite;
 
 class Graphics
 {
 public:	
-	void DrawSprite(Position2D position);
+	void Draw(Position2D position, Sprite* sprite);
 
-	Graphics(HWND hWnd);
+	Graphics(HWND hWnd, ScreenMemoryBuffer screenBuffer);
 	~Graphics();
-	HDC							m_hDC;
 
 private:
-	HWND						m_hWnd;	
+	HWND						mhWnd;		
+	ScreenMemoryBuffer			mScreenBuffer;
 };

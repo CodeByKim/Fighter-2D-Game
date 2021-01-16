@@ -1,10 +1,17 @@
 #pragma comment(lib, "winmm.lib")
 
-#include "Game.h"
+//정리대상
 #include "ScreenDib.h"
 #include "SpriteDib.h"
+
+#include "Game.h"
 #include "Sprite.h"
+
+#include "InputComponent.h"
+#include "ObjectComponent.h"
+#include "CollisionComponent.h"
 #include "RenderComponent.h"
+
 #include "GameObject.h"
 #include "Graphics.h"
 
@@ -23,18 +30,16 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
     //g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
     //g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
 
-    
-
     RegisterWindowClass();
     
     if (CreateWindowInstance(nCmdShow))
-    {
-        mGraphics = new Graphics(mhWnd);        
+    {        
+        CreateComponents();
 
-        mRenderComponent = new RenderComponent();
-        mRenderComponent->SetGraphic(mGraphics);        
-
-        mTestPlayer = new GameObject();
+        //테스트코드, 일단 테스트로 오브젝트 하나 넣어놓는다.
+        
+        mGameObjects.push_back(new GameObject(L"Map.bmp"));        
+        mGameObjects.push_back(new GameObject(L"Test.bmp"));
 
         return TRUE;
     }
@@ -123,25 +128,33 @@ bool Game::CreateWindowInstance(int nCmdShow)
     return true;
 }
 
+void Game::CreateComponents()
+{
+    mComponents.clear();
+    mComponents.reserve(4);     //컴포넌트 갯수는 일단 4개
+
+    mComponents.push_back(new InputComponent());
+    mComponents.push_back(new ObjectComponent());
+    mComponents.push_back(new CollisionComponent());
+    mComponents.push_back(new RenderComponent(mhWnd));
+}
+
 std::list<int> fpsQueue;
 void Game::FrameUpdate()
 {            
     int startTime = timeGetTime();
     
-    /*BYTE* bypDest = g_Screen.GetDibBuffer();
-    int iDestWidth = g_Screen.GetWidth();
-    int iDestHeight = g_Screen.GetHeight();
-    int iDestPitch = g_Screen.GetPitch();
-
-    g_SpriteDib.DrawSprite(0, 0, 0, bypDest, iDestWidth, iDestHeight, iDestPitch);
-    g_SpriteDib.DrawSprite(1, 100, 100, bypDest, iDestWidth, iDestHeight, iDestPitch);
-    
-    g_Screen.DrawBuffer(mhWnd, 0, 0);*/
-
-    mRenderComponent->Execute();
+    for (auto iter = mComponents.begin() ; iter != mComponents.end() ; ++iter)
+    {
+        (*iter)->Execute(mGameObjects);
+    }    
 
     //sleepTime 하드코딩.. 수정해야 함
     int spendTime = timeGetTime() - startTime;        
+    
+    WCHAR str2[32];
+    wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...            
+    OutputDebugString(str2);
     Sleep(20 - spendTime);
 
     int endTime = timeGetTime();
@@ -164,6 +177,7 @@ void Game::FrameUpdate()
     WCHAR str[32];    
     wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...    
     SetWindowText(mhWnd, str);    
+    //OutputDebugString(str);
 }
 
 LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

@@ -6,9 +6,9 @@ class GameObject;
 class BaseComponent
 {
 public:
-	virtual void Execute() = 0;
+	virtual void Execute(std::vector<GameObject*>& gameObjects) = 0;
 
-private:
-
+protected:
+	std::wstring mName;
 };
 

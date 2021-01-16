@@ -2,32 +2,17 @@
 
 #include "Library.h"
 #include "BaseComponent.h"
+#include "Screen.h"
 
 class Graphics;
-class IRenderable;
-
-struct ScreenSize
-{
-	int width;
-	int height;
-};
 
 class RenderComponent : public BaseComponent
 {
 public:
-	void Execute() override;	
+	void Execute(std::vector<GameObject*>& gameObjects) override;
 
-	RenderComponent(int width = 640, int height = 480, int colorBit = 32);
+	RenderComponent(HWND hWnd, int width = 640, int height = 480, int colorBit = 32);
 	~RenderComponent();
-	void Register(IRenderable* object)
-	{
-		mRenderObject = object;
-	}
-
-	void SetGraphic(Graphics* graphics)
-	{
-		mGraphics = graphics;
-	}		
 
 private:
 	void CreateDibBuffer(int width, int height, int colorBit);
@@ -35,14 +20,9 @@ private:
 
 	Graphics* mGraphics;
 	BITMAPINFO mDibInfo;	
-	ScreenSize mScreenSize;
+	HWND mhWnd;
 	HDC mDC;
-	int mPitch;
-	int mColorBit;
-
-	BYTE* mMemoryBuffer;
-	int mBufferSize;
-
-	IRenderable* mRenderObject;
+	
+	ScreenMemoryBuffer screenBuffer;	
 };
 

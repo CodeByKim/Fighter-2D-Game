@@ -52,7 +52,8 @@ bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, in
 			// DIB 는 뒤집어져 있으므로 이를 다시 뒤집자.
 			// 임시 버퍼에 읽은 뒤에 뒤집으면서 복사한다.
 			//-----------------------------------------------------------------
-			BYTE* bypTempBuffer = new BYTE[imageSize];			
+			BYTE* bypTempBuffer = new BYTE[imageSize];		
+			BYTE* bypSpriteTemp = bmpImage->image;
 			BYTE* bypTurnTemp;
 			ReadFile(hFile, bypTempBuffer, imageSize, &dwRead, NULL);
 
@@ -62,8 +63,8 @@ bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, in
 			bypTurnTemp = bypTempBuffer + pitch * (stInfoHeader.biHeight - 1);
 			for (int iCount = 0; iCount < stInfoHeader.biHeight; iCount++)
 			{
-				memcpy(bmpImage->image, bypTurnTemp, pitch);
-				bmpImage->image += pitch;
+				memcpy(bypSpriteTemp, bypTurnTemp, pitch);
+				bypSpriteTemp += pitch;
 				bypTurnTemp -= pitch;
 			}
 
