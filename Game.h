@@ -3,7 +3,6 @@
 #define WINDOWCLASS_NAME L"TCPFighter"
 #include "Library.h"
 
-class Graphics;
 class GameObject;
 class BaseComponent;
 
@@ -28,7 +27,6 @@ private:
 	HINSTANCE						mhInstance;
 	HWND							mhWnd;
 
-	Graphics*						mGraphics;	
 	std::vector<BaseComponent*>		mComponents;	
 	std::vector<GameObject*>		mGameObjects;
 };

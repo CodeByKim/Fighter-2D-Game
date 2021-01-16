@@ -1,15 +1,47 @@
 #include "Resources.h"
 #include "BmpImageData.h"
 
-bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, int iCenterPointX, int iCenterPointY)
+void Resources::LoadSprite(const wchar_t* path, Position2D pivot)
+{
+	auto spriteIter = mSprites.find(path);
+	if (spriteIter != mSprites.end())
+	{
+		return;
+	}
+
+	std::vector<BmpImageData>* sprites = new std::vector<BmpImageData>();
+	std::filesystem::path basePath(L"./SpriteData");
+	std::filesystem::directory_iterator iter(basePath / path);
+
+	while (iter != std::filesystem::end(iter))
+	{
+		BmpImageData data;		
+		const wchar_t* spritePath = iter->path().c_str();
+
+		if (Resources::GetInstance().LoadBmpImage(&data, spritePath))
+		{
+			sprites->push_back(data);
+			++iter;
+		}		
+	}
+
+	mSprites.insert(std::make_pair(path, sprites));
+}
+
+std::vector<BmpImageData>* Resources::GetSprites(std::wstring_view name)
+{
+	return mSprites[name.data()];
+}
+
+bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName)
 {
 	HANDLE hFile;
 	DWORD dwRead;	
 	BITMAPFILEHEADER stFileHeader;
 	BITMAPINFOHEADER stInfoHeader;
 	
-	std::filesystem::path filePath(L"./Textures");
-	filePath /= fileName;
+	//std::filesystem::path filePath(L"./SpriteData");
+	//filePath /= fileName;
 	
 	if (bmpImage == nullptr)
 	{
@@ -17,7 +49,7 @@ bool Resources::LoadBmpImage(BmpImageData* bmpImage, const wchar_t* fileName, in
 	}
 
 	//ÆÄÀÏ ¿ÀÇÂ
-	hFile = CreateFile(filePath.c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	hFile = CreateFile(fileName, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return false;

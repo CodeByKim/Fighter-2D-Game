@@ -146,6 +146,7 @@
     <ClInclude Include="BmpImageData.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputComponent.h" />
@@ -153,7 +154,7 @@
     <ClInclude Include="Library.h" />
     <ClInclude Include="ObjectComponent.h" />
     <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Screen.h" />
@@ -166,12 +167,13 @@
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ObjectComponent.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="ScreenDib.cpp" />

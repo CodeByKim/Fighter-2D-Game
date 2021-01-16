@@ -9,7 +9,7 @@ class GameObject;
 class Sprite
 {
 public:			
-	static Sprite*			Create(const wchar_t* fileName, GameObject* owner, DWORD colorKey = 0x00ffffff);
+	static Sprite*			Create(const wchar_t* fileName, GameObject* owner, DWORD colorKey = 0x00ffffff);	
 
 	Position2D&				GetPivot();	
 	void					SetPivot(Position2D pivot);

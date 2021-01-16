@@ -1,11 +1,6 @@
 #pragma comment(lib, "winmm.lib")
 
-//정리대상
-#include "ScreenDib.h"
-#include "SpriteDib.h"
-
 #include "Game.h"
-#include "Sprite.h"
 
 #include "InputComponent.h"
 #include "ObjectComponent.h"
@@ -13,38 +8,36 @@
 #include "RenderComponent.h"
 
 #include "GameObject.h"
-#include "Graphics.h"
-
-CSpriteDib g_SpriteDib(2, 0x00ffffff);
-ScreenDib g_Screen(640, 480, 32);
+#include "Resources.h"
 
 bool Game::Create(HINSTANCE hInstance, int nCmdShow)
 {
     mhInstance = hInstance;
-
-    timeBeginPeriod(1);
-
-    //wchar_t playerSpriteName[] = L"Stand_R_01.bmp";
-    //wchar_t mapSpriteName[] = L"Map.bmp";
-
-    //g_SpriteDib.LoadDibSprite(0, mapSpriteName, 0, 0);
-    //g_SpriteDib.LoadDibSprite(1, playerSpriteName, 71, 90);
-
     RegisterWindowClass();
     
     if (CreateWindowInstance(nCmdShow))
     {        
         CreateComponents();
+        timeBeginPeriod(1);
 
-        //테스트코드, 일단 테스트로 오브젝트 하나 넣어놓는다.
-        
-        mGameObjects.push_back(new GameObject(L"Map.bmp"));        
-        mGameObjects.push_back(new GameObject(L"Test.bmp"));
+        //테스트코드, 일단 테스트로 오브젝트 하나 넣어놓는다.  
+        Position2D pivot = {71, 90};
+        Resources::GetInstance().LoadSprite(L"Stand_L", pivot);
+        Resources::GetInstance().LoadSprite(L"Stand_R", pivot);
 
-        return TRUE;
+        Resources::GetInstance().LoadSprite(L"Move_L", pivot);
+        Resources::GetInstance().LoadSprite(L"Move_R", pivot);
+
+        Resources::GetInstance().LoadSprite(L"Attack1_L", pivot);
+        Resources::GetInstance().LoadSprite(L"Attack1_R", pivot);
+
+        mGameObjects.push_back(new GameObject());        
+        mGameObjects.push_back(new GameObject());
+
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 void Game::Run()
@@ -68,9 +61,7 @@ void Game::Run()
 }
 
 void Game::Release()
-{
-    delete mGraphics;
-
+{    
     timeEndPeriod(1);
 }
 
@@ -153,7 +144,7 @@ void Game::FrameUpdate()
     int spendTime = timeGetTime() - startTime;        
     
     WCHAR str2[32];
-    wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...            
+    wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...
     OutputDebugString(str2);
     Sleep(20 - spendTime);
 
@@ -176,8 +167,7 @@ void Game::FrameUpdate()
 
     WCHAR str[32];    
     wsprintf(str, L"Logic Frame : %d\n", fps);       //21ms 소모되면 47프레임이 나오네...    
-    SetWindowText(mhWnd, str);    
-    //OutputDebugString(str);
+    SetWindowText(mhWnd, str);        
 }
 
 LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -205,7 +195,7 @@ LRESULT CALLBACK Game::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 }
 
 Game::Game()
-    : mhInstance(nullptr), mhWnd(nullptr), mGraphics(nullptr)
+    : mhInstance(nullptr), mhWnd(nullptr)
 {
 }
 

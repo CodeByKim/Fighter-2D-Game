@@ -31,6 +31,12 @@
     <Filter Include="헤더 파일\Core\Object">
       <UniqueIdentifier>{ac70c9cd-9985-492e-a81e-4e379641d154}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Contents">
+      <UniqueIdentifier>{b9cb93c6-4f61-4ee7-ad83-3056b45ecdd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Contents">
+      <UniqueIdentifier>{c6c61204-f7c4-4751-b291-97bfc814c115}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library.h">
@@ -75,9 +81,6 @@
     <ClInclude Include="BaseObject.h">
       <Filter>헤더 파일\Core\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일\Core\Object</Filter>
-    </ClInclude>
     <ClInclude Include="IRenderable.h">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
@@ -89,6 +92,12 @@
     </ClInclude>
     <ClInclude Include="Screen.h">
       <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayer.h">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,11 +140,14 @@
     <ClCompile Include="BaseObject.cpp">
       <Filter>소스 파일\Core\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Core\Object</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectComponent.cpp">
       <Filter>소스 파일\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayer.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Contents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,14 +2,9 @@
 #include "Resources.h"
 
 Sprite* Sprite::Create(const wchar_t* fileName, GameObject* owner, DWORD colorKey)
-{	
-    BmpImageData data;
-    if (!Resources::GetInstance().LoadBmpImage(&data, fileName, 0, 0))
-    {
-        return nullptr;
-    }
-
-    Sprite* sprite = new Sprite(data, owner, colorKey);
+{	    
+    std::vector<BmpImageData>* sprites = Resources::GetInstance().GetSprites(fileName);
+    Sprite* sprite = new Sprite((*sprites)[0], owner, colorKey);        //임시로 0번 스프라이트만 나오게..
     return sprite;
 }
 
