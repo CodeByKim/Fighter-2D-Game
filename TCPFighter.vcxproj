@@ -160,6 +160,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenDib.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteDib.h" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="ScreenDib.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteDib.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

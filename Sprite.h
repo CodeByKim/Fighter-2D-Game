@@ -17,12 +17,12 @@ public:
 	BmpImageData			GetBmpImageData();
 	DWORD					GetColorKey();
 
+	Sprite(BmpImageData data, GameObject* owner, DWORD colorKey);
+	~Sprite();
+
 private:	
 	BmpImageData			mBmpImage;
 	DWORD					mColorKey;	
 	Position2D				mPivot;	
 	GameObject*				mOwner;
-
-	Sprite(BmpImageData data, GameObject* owner, DWORD colorKey);
-	~Sprite();
 };

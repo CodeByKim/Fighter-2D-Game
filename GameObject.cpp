@@ -17,10 +17,13 @@ void GameObject::OnUpdate()
 	if (mIsStart)
 	{
 		OnStart();
-		mIsStart = false;
+		mIsStart = false;		
 	}
-	else
+	/*else
 	{
 		OnFrameUpdate();
-	}
+	}*/
+
+	OnFrameUpdate();
+
 }

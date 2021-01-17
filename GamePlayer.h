@@ -3,7 +3,8 @@
 #include "Library.h"
 #include "GameObject.h"
 
-class Sprite;
+//class Sprite;
+class SpriteAnimation;
 class Graphics;
 
 class GamePlayer : public GameObject
@@ -16,5 +17,6 @@ public:
 	GamePlayer(int x, int y);
 
 private:
-	Sprite* mSprite;
+	//Sprite* mSprite;
+	SpriteAnimation* mAnimation;
 };

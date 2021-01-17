@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 
+#include "GamePlayer.h"
 #include "GameManager.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -15,6 +16,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (game.Create(hInstance, nCmdShow))
     {                
         GameManager* gameManager = new GameManager();
+        //game.RegisterObject(new GamePlayer(10, 10));
         game.Run();
     }
 

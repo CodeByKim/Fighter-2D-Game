@@ -162,9 +162,9 @@ void Game::FrameUpdate()
     //sleepTime 하드코딩.. 수정해야 함
     int spendTime = timeGetTime() - startTime;        
     
-    WCHAR str2[32];
-    wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...
-    OutputDebugString(str2);
+    //WCHAR str2[32];
+    //wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...
+    //OutputDebugString(str2);
     Sleep(20 - spendTime);
 
     int endTime = timeGetTime();
