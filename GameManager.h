@@ -16,4 +16,5 @@ public:
 
 private:
 	std::vector<GamePlayer*>	mPlayers;
+	Sprite*						mBackground;
 };

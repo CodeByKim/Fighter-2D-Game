@@ -21,7 +21,9 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
         timeBeginPeriod(1);
         
         #pragma region 테스트 코드
-        Position2D pivot = {71, 90};
+        Position2D mapPivot = { 0, 0 };
+        Position2D pivot = { 71, 90 };
+        Resources::GetInstance().LoadSprite(L"Map", mapPivot);
         Resources::GetInstance().LoadSprite(L"Stand_L", pivot);
         Resources::GetInstance().LoadSprite(L"Stand_R", pivot);
 

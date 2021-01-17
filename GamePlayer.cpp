@@ -10,7 +10,7 @@ void GamePlayer::OnStart()
 
 void GamePlayer::OnFrameUpdate()
 {		
-	
+	mPosition.x += 1;	
 }
 
 void GamePlayer::OnRender(Graphics* graphics)

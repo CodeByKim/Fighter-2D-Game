@@ -1,5 +1,7 @@
 #include "GameManager.h"
 #include "GamePlayer.h"
+#include "Sprite.h"
+#include "Graphics.h"
 
 void GameManager::OnStart()
 {
@@ -8,6 +10,9 @@ void GameManager::OnStart()
 	{
 		mPlayers.push_back(new GamePlayer(rand() % 640, rand() % 480));
 	}
+
+	mBackground = Sprite::Create(L"Map", this);
+	mBackground->SetPivot(0, 0);
 }
 
 void GameManager::OnFrameUpdate()
@@ -17,7 +22,7 @@ void GameManager::OnFrameUpdate()
 
 void GameManager::OnRender(Graphics* graphics)
 {
-	
+	graphics->Draw(mPosition, mBackground);
 }
 
 GameManager::GameManager() 
