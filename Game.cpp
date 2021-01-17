@@ -32,6 +32,10 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
 
         Resources::GetInstance().LoadSprite(L"Attack1_L", pivot);
         Resources::GetInstance().LoadSprite(L"Attack1_R", pivot);        
+        Resources::GetInstance().LoadSprite(L"Attack2_L", pivot);
+        Resources::GetInstance().LoadSprite(L"Attack2_R", pivot);
+        Resources::GetInstance().LoadSprite(L"Attack3_L", pivot);
+        Resources::GetInstance().LoadSprite(L"Attack3_R", pivot);
         #pragma endregion
         return true;
     }
