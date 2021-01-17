@@ -165,7 +165,7 @@ void Game::FrameUpdate()
     //WCHAR str2[32];
     //wsprintf(str2, L"spendTime : %d\n", spendTime);       //21ms 소모되면 47프레임이 나오네...
     //OutputDebugString(str2);
-    Sleep(20 - spendTime);
+    Sleep(20 - spendTime);    
 
     int endTime = timeGetTime();
     int fps = (1000 / (endTime - startTime));

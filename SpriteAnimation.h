@@ -22,9 +22,9 @@ public:
 private:
 	bool HasAnimation(std::wstring_view animationName);
 	void NextFrame();
-	void ResetFrame();
+	void ResetFrame();	
 
 	std::unordered_map<std::wstring, SpriteAnimationInfo*> mAnimations;
 	SpriteAnimationInfo* mCurrentAnimation;
-	int mIndex;
+	int frame = 0;
 };

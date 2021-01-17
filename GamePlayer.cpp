@@ -8,12 +8,37 @@ void GamePlayer::OnStart()
 	//mSprite->SetPivot(71, 90);
 
 	mAnimation = new SpriteAnimation();
-	mAnimation->AddAnimation(L"Attack1_R", this, 5);
+	mAnimation->AddAnimation(L"Move_R", this, 4);
+	mAnimation->AddAnimation(L"Move_L", this, 4);
+	mAnimation->AddAnimation(L"Stand_R", this, 3);
 }
 
 void GamePlayer::OnFrameUpdate()
-{				
-	mAnimation->Play(L"Attack1_R");
+{	
+	if (GetAsyncKeyState(VK_UP))
+	{
+		mPosition.y -= 2;
+	}
+
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		mPosition.y += 2;
+	}
+
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		mAnimation->Play(L"Move_L");
+		mPosition.x -= 2;
+	}
+	else if (GetAsyncKeyState(VK_RIGHT))
+	{
+		mAnimation->Play(L"Move_R");
+		mPosition.x += 2;
+	}
+	else
+	{
+		mAnimation->Play(L"Stand_R");
+	}
 }
 
 void GamePlayer::OnRender(Graphics* graphics)

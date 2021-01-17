@@ -27,15 +27,12 @@ void SpriteAnimation::AddAnimation(const wchar_t* fileName, GameObject* owner, i
     mAnimations.insert(std::make_pair(fileName, info));
 }
 
-int frame = 0;
 void SpriteAnimation::Play(std::wstring_view animationName)
-{
+{    
     auto iter = mAnimations.find(animationName.data());
     SpriteAnimationInfo* anim = iter->second;
-
-    //프레임 애니메이션을 돌려야하는데...
+    
     //우선.. Play함수는 프레임마다 실행되니까 상관은 없을거같은데.. 문제는 프레임스킵이다.
-
     if (mCurrentAnimation == nullptr)
     {
         mCurrentAnimation = anim;
@@ -49,50 +46,39 @@ void SpriteAnimation::Play(std::wstring_view animationName)
         mCurrentAnimation->currentFrame = 0;
         mCurrentAnimation->currentSprite = mCurrentAnimation->animation[0];
     }
-    
-    int currentFrame = mCurrentAnimation->currentFrame;
-
-    /*wchar_t str[32];
-    wsprintf(str, L"Current Frame : %d\n", currentFrame);
-    OutputDebugString(str);*/
-
-    // 현재 애니메이션의 딜레이가 
-    if (mCurrentAnimation->delay >= frame)
-    {
-        //mCurrentAnimation->currentSprite = mCurrentAnimation->animation[currentFrame];        
-        //이게 마지막 프레임인지 체크 필요
-        if (mCurrentAnimation->currentFrame >= mCurrentAnimation->animation.size() - 1)
-        {
-            //mCurrentAnimation->currentFrame = 0;
-            ResetFrame();
+        
+    if (mCurrentAnimation->delay <= frame)
+    {        
+        int currentFrame = mCurrentAnimation->currentFrame;        
+        if (currentFrame >= mCurrentAnimation->animation.size())
+        {            
+            ResetFrame();            
         }
         else
         {
-            NextFrame();
+            NextFrame(); 
+            
         }
-
         frame = 0;
     }
-    else
-    {
-        frame += 1;
-        //NextFrame();
-        //mCurrentAnimation->currentFrame += 1;
-    }
+    
+    frame += 1;
 }
 
 void SpriteAnimation::NextFrame()
-{    
-    mCurrentAnimation->currentFrame = mIndex;
-    mCurrentAnimation->currentSprite = mCurrentAnimation->animation[mIndex];
-    mIndex += 1;
+{        
+    wchar_t str[32];
+    wsprintf(str, L"Current Frame : %d\n", mCurrentAnimation->currentFrame);
+    OutputDebugString(str);
+
+    mCurrentAnimation->currentSprite = mCurrentAnimation->animation[mCurrentAnimation->currentFrame];
+    mCurrentAnimation->currentFrame += 1;    
 }
 
 void SpriteAnimation::ResetFrame()
-{
-    mIndex = 0;
-    mCurrentAnimation->currentFrame = mIndex;
-    mCurrentAnimation->currentSprite = mCurrentAnimation->animation[mIndex];
+{        
+    mCurrentAnimation->currentSprite = mCurrentAnimation->animation[0];
+    mCurrentAnimation->currentFrame = 0;
 }
 
 Sprite* SpriteAnimation::GetCurrentSprite()
