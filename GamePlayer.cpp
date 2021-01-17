@@ -2,9 +2,10 @@
 #include "Sprite.h"
 #include "Graphics.h"
 
-void GamePlayer::Start()
+void GamePlayer::OnStart()
 {
-
+	mSprite = Sprite::Create(L"Stand_R", this);
+	mSprite->SetPivot(71, 90);
 }
 
 void GamePlayer::OnFrameUpdate()
@@ -18,8 +19,6 @@ void GamePlayer::OnRender(Graphics* graphics)
 }
 
 GamePlayer::GamePlayer(int x, int y) 
-	: GameObject(x, y)
-{
-	mSprite = Sprite::Create(L"Stand_R", this);
-	mSprite->SetPivot(71, 90);
+	: GameObject(x, y), mSprite(nullptr)
+{	
 }

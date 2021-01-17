@@ -9,7 +9,7 @@ class Graphics;
 class GamePlayer : public GameObject
 {
 public:
-	void				Start() override;
+	void				OnStart() override;
 	void				OnFrameUpdate() override;
 	void				OnRender(Graphics* gra1phics) override;
 

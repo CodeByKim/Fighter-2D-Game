@@ -1,6 +1,5 @@
 ﻿#include "Game.h"
 
-#include "GamePlayer.h"
 #include "GameManager.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -14,15 +13,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Game& game = Game::GetInstance();
 
     if (game.Create(hInstance, nCmdShow))
-    {
-        srand((unsigned int)time(NULL));
-        for (int i = 0; i < 6; i++)
-        {
-            game.RegisterObject(new GamePlayer(rand() % 600, rand() % 480));
-        }        
-
-        //game.RegisterObject(new GameManager());
-
+    {                
+        GameManager* gameManager = new GameManager();
         game.Run();
     }
 

@@ -7,7 +7,7 @@ class Graphics;
 class BaseObject
 {
 public:
-	virtual void			Start() = 0;
+	virtual void			OnStart() = 0;
 	virtual void			OnUpdate() = 0;
 	virtual void			OnRender(Graphics* graphics) = 0;	
 	

@@ -8,13 +8,15 @@ GameObject::GameObject(int x, int y)
 {	
 	mIsStart = true;	
 	mPosition = { x, y };
+
+	Game::GetInstance().RegisterObject(this);
 }
 
 void GameObject::OnUpdate()
 {	
 	if (mIsStart)
 	{
-		Start();
+		OnStart();
 		mIsStart = false;
 	}
 	else
