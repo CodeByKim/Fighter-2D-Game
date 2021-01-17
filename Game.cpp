@@ -19,8 +19,8 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
     {        
         CreateComponents();
         timeBeginPeriod(1);
-
-        //테스트코드, 일단 테스트로 오브젝트 하나 넣어놓는다.  
+        
+        #pragma region 테스트 코드
         Position2D pivot = {71, 90};
         Resources::GetInstance().LoadSprite(L"Stand_L", pivot);
         Resources::GetInstance().LoadSprite(L"Stand_R", pivot);
@@ -29,11 +29,8 @@ bool Game::Create(HINSTANCE hInstance, int nCmdShow)
         Resources::GetInstance().LoadSprite(L"Move_R", pivot);
 
         Resources::GetInstance().LoadSprite(L"Attack1_L", pivot);
-        Resources::GetInstance().LoadSprite(L"Attack1_R", pivot);
-
-        mGameObjects.push_back(new GameObject());        
-        mGameObjects.push_back(new GameObject());
-
+        Resources::GetInstance().LoadSprite(L"Attack1_R", pivot);        
+        #pragma endregion
         return true;
     }
 
@@ -63,6 +60,26 @@ void Game::Run()
 void Game::Release()
 {    
     timeEndPeriod(1);
+}
+
+void Game::RegisterObject(GameObject* object)
+{
+    //일단 오브젝트 생성은 됬고..
+    //등록을 해야함    
+    mGameObjects.push_back(object);
+}
+
+BaseComponent* Game::GetComponent(std::wstring_view componentName)
+{
+    for (auto component : mComponents)
+    {
+        if (component->GetName() == componentName)
+        {
+            return component;
+        }
+    }
+
+    return nullptr;
 }
 
 Game& Game::GetInstance()

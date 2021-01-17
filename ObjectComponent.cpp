@@ -3,7 +3,7 @@
 
 void ObjectComponent::Execute(std::vector<GameObject*>& gameObjects)
 {
-	for (int i = 0; i < gameObjects.size(); i++)
+	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		gameObjects[i]->OnUpdate();
 	}

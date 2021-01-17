@@ -1,6 +1,7 @@
 #pragma once
 
 #define WINDOWCLASS_NAME L"TCPFighter"
+
 #include "Library.h"
 
 class GameObject;
@@ -12,6 +13,9 @@ public:
 	bool							Create(HINSTANCE hInstance, int nCmdShow);
 	void							Run();
 	void							Release();
+	void							RegisterObject(GameObject* object);
+	BaseComponent*					GetComponent(std::wstring_view componentName);
+
 	static Game&					GetInstance();
 	
 private:	

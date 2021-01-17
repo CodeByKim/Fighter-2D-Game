@@ -23,7 +23,7 @@ void RenderComponent::Execute(std::vector<GameObject*>& gameObjects)
 	if (screenBuffer.memoryBuffer == nullptr)
 		return;
 
-	for (int i = 0; i < gameObjects.size(); i++)
+	for (size_t i = 0; i < gameObjects.size(); i++)
 	{
 		gameObjects[i]->OnRender(mGraphics);
 	}

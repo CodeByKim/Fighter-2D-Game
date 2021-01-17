@@ -7,13 +7,15 @@ class Sprite;
 
 class GameObject : public BaseObject
 {
-public:	
+public:		
 	void				OnUpdate() override;
-	void				OnRender(Graphics* graphics) override;
+	virtual void		OnFrameUpdate() = 0;
 
-						GameObject();
+	GameObject(int x, int y);
 
-protected:
-	Sprite*				mSprite;
-	Position2D			mPosition;
+protected:	
+	Position2D			mPosition;	
+
+private:
+	bool				mIsStart;
 };

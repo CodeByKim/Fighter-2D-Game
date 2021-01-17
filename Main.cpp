@@ -1,8 +1,7 @@
 ﻿#include "Game.h"
-#include "Resources.h"
-#include "Sprite.h"
 
-#include "GameObject.h"
+#include "GamePlayer.h"
+#include "GameManager.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -11,14 +10,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-        
-    //Sprite* sprite = Sprite::Create(L"Test.bmp");
-    //sprite->SetPivot(71, 90);    
     
-    if (Game::GetInstance().Create(hInstance, nCmdShow))
+    Game& game = Game::GetInstance();
+
+    if (game.Create(hInstance, nCmdShow))
     {
-        Game::GetInstance().Run();
+        srand((unsigned int)time(NULL));
+        for (int i = 0; i < 6; i++)
+        {
+            game.RegisterObject(new GamePlayer(rand() % 600, rand() % 480));
+        }        
+
+        //game.RegisterObject(new GameManager());
+
+        game.Run();
     }
 
-    Game::GetInstance().Release();    
+    game.Release();
 }

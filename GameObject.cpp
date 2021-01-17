@@ -1,21 +1,24 @@
+#include "Game.h"
 #include "GameObject.h"
 #include "Graphics.h"
+#include "ObjectComponent.h"
 #include "Sprite.h"
 
-GameObject::GameObject()
-{
-	mSprite = Sprite::Create(L"Attack1_R", this);
-
-	mSprite->SetPivot(71, 90);
-	mPosition = { 200, 200 };
+GameObject::GameObject(int x, int y)
+{	
+	mIsStart = true;	
+	mPosition = { x, y };
 }
 
 void GameObject::OnUpdate()
 {	
-	
-}
-
-void GameObject::OnRender(Graphics* graphics)
-{	
-	graphics->Draw(mPosition, mSprite);
+	if (mIsStart)
+	{
+		Start();
+		mIsStart = false;
+	}
+	else
+	{
+		OnFrameUpdate();
+	}
 }
